@@ -35,7 +35,7 @@ import memoize from 'lodash.memoize'; // Use for caching/memoize for better perf
 import {moderateScale} from 'react-native-size-matters';
 import Navigation from '../navigation/Navigation';
 import {Color} from '../../colors/Colors';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 import {Actions} from 'react-native-router-flux';
 
 const translationGetters = {

@@ -25,7 +25,7 @@ import Navigation from '../navigation/Navigation';
 import {moderateScale} from 'react-native-size-matters';
 import Toolbar from '../toolbar/Toolbar';
 import {Color} from '../../colors/Colors';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 
 // multi languages
 import * as RNLocalize from 'react-native-localize';

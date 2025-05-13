@@ -51,7 +51,7 @@ import Navigation from '../navigation/Navigation';
 import moment from 'moment';
 import SoundService from '../../soundService/SoundService';
 import scales from '../../styles/scales';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 import TouchableDebounce from '../../commons/components/TouchableDebounce';
 
 const translationGetters = {

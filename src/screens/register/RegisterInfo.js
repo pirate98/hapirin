@@ -57,7 +57,7 @@ import {Color} from '../../colors/Colors';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SoundService from '../../soundService/SoundService';
 import scales from '../../styles/scales';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 const {TaskManager} = NativeModules;
 
 var radio_props = [

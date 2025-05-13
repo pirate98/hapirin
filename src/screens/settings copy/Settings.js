@@ -30,7 +30,7 @@ import {moderateScale} from 'react-native-size-matters';
 import Rate, {AndroidMarket} from 'react-native-rate';
 import SoundService from '../../soundService/SoundService';
 import scales from '../../styles/scales';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 import {Actions} from 'react-native-router-flux';
 
 const translationGetters = {

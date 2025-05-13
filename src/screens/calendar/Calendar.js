@@ -29,7 +29,7 @@ import memoize from 'lodash.memoize'; // Use for caching/memoize for better
 import HapirinCustomCalendar from '../../commons/components/HapirinCustomCalendar';
 import moment from 'moment';
 import {getUserInfo} from '../../databases/StorageServices';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 
 const translationGetters = {
   //lazy requires (metro bundler does not support symlinks)

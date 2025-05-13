@@ -47,7 +47,7 @@ import SoundService from '../../soundService/SoundService';
 import {RadioButton, RadioGroup} from 'react-native-flexi-radio-button';
 import ModalDropdown from 'react-native-modal-dropdown';
 import scales from '../../styles/scales';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 import {Actions} from 'react-native-router-flux';
 
 const translationGetters = {

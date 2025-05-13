@@ -46,7 +46,7 @@ import Navigation from '../navigation/Navigation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import NotificationHandle from '../../../Notification';
 import scales from '../../styles/scales';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 import ScrollPicker from '../../utils/ScrollPicker';
 import {getUserInfo} from '../../databases/StorageServices';
 import moment from 'moment';

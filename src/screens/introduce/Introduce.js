@@ -17,7 +17,7 @@ import ViewPager from '@react-native-community/viewpager';
 import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {Actions} from 'react-native-router-flux';
 import SoundService from '../../soundService/SoundService';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 import TouchableDebounce from '../../commons/components/TouchableDebounce';
 import {Color} from '../../colors/Colors';
 import Constants, {isIpX, ratio} from '../../constants/Constants';

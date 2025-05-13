@@ -22,7 +22,7 @@ import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better
 import SoundService from '../../soundService/SoundService';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 
 const translationGetters = {
   //lazy requires (metro bundler does not support symlinks)

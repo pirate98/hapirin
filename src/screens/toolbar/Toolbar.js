@@ -24,7 +24,7 @@ import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import SoundService from '../../soundService/SoundService';
 import {Color} from '../../colors/Colors';
 import scales from '../../styles/scales';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 import {Actions} from 'react-native-router-flux';
 import TouchableDebounceDelay from '../../commons/components/TouchableDebounce';
 import TouchableDebounce from '../../commons/components/TouchableDebounce';

@@ -51,7 +51,7 @@ import moment from 'moment';
 import NCMBInitialization from '../../../NCMBInitialization';
 import scales from '../../styles/scales';
 import TextFont from '../../commons/components/TextFont';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 const {TaskManager} = NativeModules;
 import NotificationHandle from '../../../Notification';
 
