@@ -1,92 +1,73 @@
-/**
- * Webview screen
- */
-
-import React from 'react';
-import {StyleSheet, View, BackHandler, ActivityIndicator} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {
+  StyleSheet,
+  View,
+  BackHandler,
+  ActivityIndicator,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import Toolbar from '../toolbar/Toolbar';
-import {Actions} from 'react-native-router-flux';
 import Constants from '../../constants/Constants';
 import {WebView} from 'react-native-webview';
 import {Color} from '../../colors/Colors';
 
-export default class Versions extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-    };
-  }
+const Versions = () => {
+  const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(true);
 
-  componentDidMount() {
-    // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      // Actions.pop();
+  const showSpinner = () => setIsLoading(true);
+  const hideSpinner = () => setIsLoading(false);
+
+  const onClickBackButton = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      navigation.goBack();
+      return true;
     });
-  }
 
-  componentWillUnmount() {
-    // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
-  }
+    return () => {
+      backHandler.remove();
+    };
+  }, [navigation]);
 
-  onClickRightButton = () => {
-    // alert('BBBB')
-  };
-
-  onClickBackButton = () => {
-    Actions.pop();
-  };
-
-  showSpinner() {
-    this.setState({isLoading: true});
-  }
-
-  hideSpinner() {
-    this.setState({isLoading: false});
-  }
-
-  renderActivityIndicator() {
-    if (this.state.isLoading) {
-      return (
-        <View style={styles.viewIndicator}>
-          <ActivityIndicator
-            size="large"
-            color={Color.cl_loading}
-            style={styles.activityIndicatorStyle}
-          />
-        </View>
-      );
-    }
-  }
-
-  render() {
-    return (
-      <View style={styles.parent}>
-        <Toolbar
-          leftIcon="back"
-          nameRightButton="none"
-          style={styles.toolbar}
-          onClickBackButton={() => this.onClickBackButton()}
-          title={Constants.SCREEN_VERSION.TITLE}
+  return (
+    <View style={styles.parent}>
+      <Toolbar
+        leftIcon="back"
+        nameRightButton="none"
+        style={styles.toolbar}
+        onClickBackButton={onClickBackButton}
+        title={Constants.SCREEN_VERSION.TITLE}
+      />
+      <View style={styles.content}>
+        <WebView
+          source={{uri: Constants.WEB_VIEW_VERSION}}
+          javaScriptEnabled
+          domStorageEnabled
+          onLoadStart={showSpinner}
+          onLoad={hideSpinner}
+          scalesPageToFit
+          showsVerticalScrollIndicator={false}
         />
-        <View style={styles.content}>
-          <WebView
-            source={{uri: Constants.WEB_VIEW_VERSION}}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            onLoadStart={() => this.showSpinner()}
-            onLoad={() => this.hideSpinner()}
-            scalesPageToFit={true}
-            showsVerticalScrollIndicator={false}
-          />
-          {this.renderActivityIndicator()}
-        </View>
+        {isLoading && (
+          <View style={styles.viewIndicator}>
+            <ActivityIndicator
+              size="large"
+              color={Color.cl_loading}
+              style={styles.activityIndicatorStyle}
+            />
+          </View>
+        )}
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
+
+export default Versions;
 
 const styles = StyleSheet.create({
   parent: {

@@ -1,10 +1,4 @@
-/**
- * BeetSoft Co., Ltd
- * Policy Screen
- *
- */
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,13 +6,12 @@ import {
   TouchableOpacity,
   BackHandler,
   I18nManager,
-  Dimensions,
-  AsyncStorage,
   ActivityIndicator,
+  AppState,
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import Constants, {BASE_URL, API_GET_HisRd} from '../../constants/Constants';
-import Navigation from '../navigation/Navigation';
 import {moderateScale} from 'react-native-size-matters';
 import Toolbar from '../toolbar/Toolbar';
 import {Color} from '../../colors/Colors';
@@ -42,187 +35,123 @@ const translate = memoize(
 );
 
 const setI18nConfig = () => {
-  //fallback if no available language fits
   const fallback = {languageTag: 'jp', isRTL: false};
-
   const {languageTag, isRTL} =
-    RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
-    fallback;
+    RNLocalize.findBestLanguageTag(Object.keys(translationGetters)) || fallback;
 
-  // clear translation cache
-  translate.cache.clear();
-  //update layout direction
+  translate.cache.clear;
   I18nManager.forceRTL(isRTL);
-  //set i18n-js config
-  i18n.translations = {[languageTag]: translationGetters[languageTag]()};
+  i18n.translations = { [languageTag]: translationGetters[languageTag]() };
   i18n.locale = languageTag;
 };
 
-export default class Calendar extends React.Component {
-  constructor(props) {
-    super(props);
+const Calendar = () => {
+  const navigation = useNavigation();
+
+  const [ID, setID] = useState(0);
+  const [date, setDate] = useState(new Date());
+  const [previousMonth, setPreviousMonth] = useState(new Date().getMonth().toString());
+  const [nextMonth, setNextMonth] = useState(new Date().getMonth().toString());
+  const [time, setTime] = useState('');
+  const [selectedStartDate, setSelectedStartDate] = useState<string | null>(null);
+  const [dayCharing, setDayCharing] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [dateInstall, setDateInstall] = useState('');
+  const [locale, setLocale] = useState(RNLocalize.getLocales()[0]?.languageTag);
+  
+  useEffect(() => {
     setI18nConfig();
-    this.state = {
-      ID: 0,
-      date: new Date(),
-      previousMonth: new Date().getMonth(),
-      nextMonth: new Date().getMonth(),
-      time: '',
-      selectedStartDate: null,
-      dayCharing: [],
-      isLoading: true,
-      dateInstall: '',
-    };
-  }
+    getDateInstallApp();
+    const now = new Date();
+    renDateMonth(now.getFullYear(), now.getMonth() + 1);
+    getUserInfo().then(userInfo => {
+      const userId = userInfo[0]?.ID;
+      setID(userId);
+      getHisRd(userId);
+    });
 
-  onDateChange(date) {
-    Navigation.gotoCharinHistory({date, ID: this.state.ID});
-  }
-
-  componentDidMount() {
-    this.getDateInstallApp();
-
-    // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      Actions.pop();
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      navigation.goBack();
       return true;
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
-    this.renDateMonth(
-      this.state.date.getFullYear(),
-      this.state.date.getMonth() + 1,
-    );
-    setTimeout(() => {
-      getUserInfo()
-        .then(userInfo => {
-          this.setState({
-            ID: userInfo[0].ID,
-          });
-          this.getHisRd(userInfo[0].ID);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }, 300);
-  }
 
-  async getDateInstallApp() {
+    const handleAppStateChange = (nextAppState) => {
+      if (nextAppState === 'active') {
+        const currentLocale = RNLocalize.getLocales()[0]?.languageTag;
+        if (currentLocale && currentLocale !== locale) {
+          setLocale(currentLocale);
+          setI18nConfig();
+        }
+      }
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    
+    return () => {
+      backHandler.remove();
+      subscription.remove();
+    }
+  }, [locale]);
+
+  const getDateInstallApp = async () => {
     try {
       const key1 = await AsyncStorage.getItem('dateInstall');
-
       if (key1 !== null) {
-        // We have data!!
-        this.setState({dateInstall: key1}, () => {
-          console.log('dateInstall => ', this.state.dateInstall);
-        });
+        setDateInstall(key1);
       }
     } catch (error) {
       console.log('Error retrieving data' + error);
     }
-  }
-
-  UNSAFE_componentWillMount() {}
-
-  componentWillUnmount() {
-    // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
-  }
-
-  onClickBackButton = () => {
-    Actions.pop();
   };
 
-  handleLocalizationChange = () => {
-    setI18nConfig();
-    this.forceUpdate();
-  };
-
-  getHisRd(name) {
+  const getHisRd = (name) => {
     fetch(BASE_URL + API_GET_HisRd, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/x-www-form-urlencoded',
       }),
-      body: 'Name='
-        .concat(name)
-        .concat('&JobDate=')
-        .concat(this.state.dateInstall),
+      body: `Name=${name}&JobDate=${dateInstall}`,
     })
-      .then(response => {
-        return response.json();
-      })
+      .then(response => response.json())
       .then(responseJson => {
-        for (let data of responseJson) {
-          this.state.dayCharing.push(data.JobDate.slice(0, 8));
-        }
-        this.setState({
-          isLoading: false,
-        });
+        const updatedDays = responseJson.map((data) =>
+          data.JobDate.slice(0, 8),
+        );
+        setDayCharing(updatedDays);
+        setIsLoading(false);
       })
-      .catch(error => {
-        this.setState({
-          isLoading: false,
-        });
-      });
-  }
+      .catch(() => setIsLoading(false));
+  };
 
-  renDateMonth(year, month) {
-    var yearText = '年';
-    var monthText = '月';
-    if (month === 12) {
-      this.setState({
-        nextMonth: 1 + monthText,
-      });
-    } else {
-      this.setState({
-        nextMonth: month + 1 + monthText,
-      });
-    }
-    if (month === 1) {
-      this.setState({
-        previousMonth: 12 + monthText,
-      });
-    } else {
-      this.setState({
-        previousMonth: month - 1 + monthText,
-      });
-    }
-    this.setState({
-      time: year
-        .toString()
-        .concat(yearText)
-        .concat(month)
-        .concat(monthText),
-    });
-  }
+  const renDateMonth = (year, month) => {
+    const yearText = '年';
+    const monthText = '月';
 
-  renNextDay(date) {
-    date.setDate(32);
-  }
+    setNextMonth(month === 12 ? 1 + monthText : month + 1 + monthText);
+    setPreviousMonth(month === 1 ? 12 + monthText : month - 1 + monthText);
+    setTime(`${year}${yearText}${month}${monthText}`);
+  };
 
-  renPreviousDay(date) {
-    date.setDate(-1);
-  }
+  const renNextState = () => {
+    const next = new Date(date);
+    next.setDate(32);
+    setDate(next);
+    renDateMonth(next.getFullYear(), next.getMonth() + 1);
+  };
 
-  renNextState() {
-    this.renNextDay(this.state.date);
-    this.renDateMonth(
-      this.state.date.getFullYear(),
-      this.state.date.getMonth() + 1,
-    );
-  }
+  const renPreviousState = () => {
+    const prev = new Date(date);
+    prev.setDate(-1);
+    setDate(prev);
+    renDateMonth(prev.getFullYear(), prev.getMonth() + 1);
+  };
 
-  renPreviousState() {
-    this.renPreviousDay(this.state.date);
-    this.renDateMonth(
-      this.state.date.getFullYear(),
-      this.state.date.getMonth() + 1,
-    );
-  }
+  const onDateChange = (selectedDate) => {
+    navigation.navigate(Constants.SCREEN_CHARIN_HISTORY.KEY, { date: selectedDate, ID });
+  };
 
-  renderActivityIndicator() {
-    if (this.state.isLoading) {
+  const renderActivityIndicator = () => {
+    if (isLoading) {
       return (
         <View style={styles.viewIndicator}>
           <ActivityIndicator
@@ -233,103 +162,96 @@ export default class Calendar extends React.Component {
         </View>
       );
     }
-  }
+    return null;
+  };
 
-  render() {
-    // if (!this.state.isLoading) {
-    return (
-      <View style={styles.parent}>
-        <Toolbar
-          leftIcon="home"
-          nameRightButton="none"
-          style={styles.toolbar}
-          onClickBackButton={() => this.onClickBackButton()}
-          title={Constants.SCREEN_CALENDAR.TITLE}
-        />
-        <View style={styles.content}>
-          <View style={styles.note}>
-            <Text style={styles.textbutton}>{this.state.previousMonth}</Text>
-            <TouchableOpacity
-              onPress={() => this.renPreviousState()}
-              style={styles.touchableopacitystyle}>
-              <FastImage
-                style={styles.imagebuttonstyle}
-                source={require('../../resources/images/f-1-1.png')}
-                resizeMode={FastImage.resizeMode.contain}
-              />
-            </TouchableOpacity>
-            <Text style={styles.textdatetime}>{this.state.time}</Text>
-            <TouchableOpacity
-              onPress={() => this.renNextState()}
-              style={styles.touchableopacitystyle}>
-              <FastImage
-                style={styles.imagebuttonstyle}
-                source={require('../../resources/images/f-1-2.png')}
-                resizeMode={FastImage.resizeMode.contain}
-              />
-            </TouchableOpacity>
-            <Text style={styles.textbutton}>{this.state.nextMonth}</Text>
-          </View>
-          <View style={styles.calendar}>
-            <HapirinCustomCalendar
-              showDayHeading={true}
-              dayCharing={this.state.dayCharing}
-              dayHeadings={['日', '月', '火', '水', '木', '金', '土']}
-              onDateSelect={this.onDateChange.bind(this)}
-              startDate={moment(new Date(this.state.date).toISOString())
-                .startOf('month')
-                .format('YYYY-MM-DD')}
-              selectedDate={moment(new Date().toISOString()).format(
-                'YYYY-MM-DD',
-              )}
-              numberOfDaysToShow={42}
-              enabledDaysOfTheWeek={['日', '月', '火', '水', '木', '金', '土']}
-              isoWeek={false}
-              disablePreviousDays={false}
-              disableToday={false}
-              dayStyle={{
-                textAlign: 'center',
-                lineHeight: moderateScale(73),
-                height: moderateScale(73),
-              }}
-              headingStyle={{
-                backgroundColor: '#FCE36C',
-                lineHeight: moderateScale(30),
-                height: moderateScale(30),
-                color: 'black',
-                fontFamily: 'HuiFont',
-              }}
-              sunDayheadingStyle={{
-                backgroundColor: '#FEBDBC',
-                lineHeight: moderateScale(30),
-                height: moderateScale(30),
-                color: 'black',
-                fontFamily: 'HuiFont',
-              }}
-              satDayheadingStyle={{
-                backgroundColor: '#ADE2D6',
-                lineHeight: moderateScale(30),
-                height: moderateScale(30),
-                color: 'black',
-                fontFamily: 'HuiFont',
-              }}
-              activeDayStyle={{
-                backgroundColor: '#FEF1BD',
-                color: 'black',
-                fontFamily: 'HuiFont',
-              }}
-              sunDayStyle={{backgroundColor: '#FEE4D9', color: 'black'}}
-              satDayStyle={{backgroundColor: '#E3F0E0', color: 'black'}}
-              selectedDayStyle={{backgroundColor: '#FEF1BD', color: 'black'}}
+  const onClickRightButton = () => { }
+
+  return (
+    <View style={styles.parent}>
+      <Toolbar
+        leftIcon="home"
+        nameRightButton="none"
+        onClickBackButton={() => navigation.goBack()}
+        title={Constants.SCREEN_CALENDAR.TITLE}
+        onClickRightButton={onClickRightButton}
+      />
+      <View style={styles.content}>
+        <View style={styles.note}>
+          <Text style={styles.textbutton}>{previousMonth}</Text>
+          <TouchableOpacity onPress={renPreviousState} style={styles.touchableopacitystyle}>
+            <FastImage
+              style={styles.imagebuttonstyle}
+              source={require('../../resources/images/f-1-1.png')}
+              resizeMode={FastImage.resizeMode.contain}
             />
-          </View>
+          </TouchableOpacity>
+          <Text style={styles.textdatetime}>{time}</Text>
+          <TouchableOpacity onPress={renNextState} style={styles.touchableopacitystyle}>
+            <FastImage
+              style={styles.imagebuttonstyle}
+              source={require('../../resources/images/f-1-2.png')}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          </TouchableOpacity>
+          <Text style={styles.textbutton}>{nextMonth}</Text>
         </View>
-        {this.renderActivityIndicator()}
+        <View style={styles.calendar}>
+          <HapirinCustomCalendar
+            showDayHeading
+            dayCharing={dayCharing}
+            dayHeadings={['日', '月', '火', '水', '木', '金', '土']}
+            onDateSelect={onDateChange}
+            startDate={moment(date).startOf('month').format('YYYY-MM-DD')}
+            selectedDate={moment(new Date()).format('YYYY-MM-DD')}
+            numberOfDaysToShow={42}
+            enabledDaysOfTheWeek={['日', '月', '火', '水', '木', '金', '土']}
+            isoWeek={false}
+            disablePreviousDays={false}
+            disableToday={false}
+            dayStyle={{
+              textAlign: 'center',
+              lineHeight: moderateScale(73),
+              height: moderateScale(73),
+            }}
+            headingStyle={{
+              backgroundColor: '#FCE36C',
+              lineHeight: moderateScale(30),
+              height: moderateScale(30),
+              color: 'black',
+              fontFamily: 'HuiFont',
+            }}
+            sunDayheadingStyle={{
+              backgroundColor: '#FEBDBC',
+              lineHeight: moderateScale(30),
+              height: moderateScale(30),
+              color: 'black',
+              fontFamily: 'HuiFont',
+            }}
+            satDayheadingStyle={{
+              backgroundColor: '#ADE2D6',
+              lineHeight: moderateScale(30),
+              height: moderateScale(30),
+              color: 'black',
+              fontFamily: 'HuiFont',
+            }}
+            activeDayStyle={{
+              backgroundColor: '#FEF1BD',
+              color: 'black',
+              fontFamily: 'HuiFont',
+            }}
+            sunDayStyle={{ backgroundColor: '#FEE4D9', color: 'black' }}
+            satDayStyle={{ backgroundColor: '#E3F0E0', color: 'black' }}
+            selectedDayStyle={{ backgroundColor: '#FEF1BD', color: 'black' }}
+          />
+        </View>
       </View>
-    );
-    // }else return null
-  }
-}
+      {renderActivityIndicator()}
+    </View>
+  );
+};
+
+export default Calendar;
 
 const styles = StyleSheet.create({
   parent: {
@@ -338,15 +260,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 8,
-    flexDirection: 'column',
     backgroundColor: Color.backgroundSetting,
   },
   note: {
     justifyContent: 'center',
     flexDirection: 'row',
-    // width: '100%',
     height: '8%',
-    alignContent: 'center',
     alignItems: 'center',
   },
   textbutton: {
@@ -354,11 +273,9 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: moderateScale(13),
     fontFamily: 'HuiFont',
-    paddingStart: moderateScale(10),
     textAlign: 'center',
   },
   textdatetime: {
-    width: '50%',
     color: 'black',
     fontSize: moderateScale(18),
     fontFamily: 'HuiFont',
@@ -367,7 +284,6 @@ const styles = StyleSheet.create({
   },
   touchableopacitystyle: {
     flex: 1,
-    width: '5%',
     alignItems: 'center',
   },
   imagebuttonstyle: {
@@ -375,24 +291,20 @@ const styles = StyleSheet.create({
     height: '70%',
     resizeMode: 'contain',
   },
-  styleImageBlank: {
-    width: '100%',
-    height: '100%',
-  },
   calendar: {
     height: moderateScale(500),
     flexDirection: 'column',
   },
   viewIndicator: {
     backgroundColor: Color.background_transparent,
-    width: '100%',
-    height: '100%',
     position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   activityIndicatorStyle: {
     alignSelf: 'center',
-    position: 'absolute',
     top: '50%',
-    color: Constants.BACKGROUND_COLOR_TOOLBAR,
   },
 });

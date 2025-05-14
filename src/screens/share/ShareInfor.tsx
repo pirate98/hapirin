@@ -1,38 +1,40 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
   BackHandler,
   ActivityIndicator,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { WebView } from 'react-native-webview';
 
 import Toolbar from '../toolbar/Toolbar';
 import Constants from '../../constants/Constants';
-import {WebView} from 'react-native-webview';
-import {Color} from '../../colors/Colors';
+import { Color } from '../../colors/Colors';
 
-const CompanyProfile = () => {
+const ShareInfor: React.FC = () => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
 
-  const showSpinner = () => setIsLoading(true);
-  const hideSpinner = () => setIsLoading(false);
-
-  const onClickBackButton = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
-
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      navigation.goBack();
-      return true;
-    });
+    const subscription = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        navigation.goBack();
+        return true;
+      }
+    );
 
     return () => {
-      backHandler.remove();
+      subscription.remove(); // ✅ Correct way to clean up
     };
   }, [navigation]);
+
+  const onClickBackButton = () => {
+    navigation.goBack();
+  };
+
+  const onClickRightButton = () => {}
 
   return (
     <View style={styles.parent}>
@@ -41,15 +43,16 @@ const CompanyProfile = () => {
         nameRightButton="none"
         style={styles.toolbar}
         onClickBackButton={onClickBackButton}
-        title={Constants.SCREEN_COMPANY_PROFILE.TITLE}
+        title={Constants.SCREEN_SHARE_INFOR.TITLE}
+        onClickRightButton={onClickRightButton}
       />
       <View style={styles.content}>
         <WebView
-          source={{uri: Constants.WEB_VIEW_COMPANY}}
+          source={{ uri: Constants.WEB_VIEW_SHARE }}
           javaScriptEnabled
           domStorageEnabled
-          onLoadStart={showSpinner}
-          onLoad={hideSpinner}
+          onLoadStart={() => setIsLoading(true)}
+          onLoad={() => setIsLoading(false)}
           scalesPageToFit
           showsVerticalScrollIndicator={false}
         />
@@ -66,8 +69,6 @@ const CompanyProfile = () => {
     </View>
   );
 };
-
-export default CompanyProfile;
 
 const styles = StyleSheet.create({
   parent: {
@@ -94,3 +95,5 @@ const styles = StyleSheet.create({
     color: Color.cl_loading,
   },
 });
+
+export default ShareInfor;
