@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { BackHandler } from 'react-native';
 import Constants from '../constants/Constants';
 
 import Toolbar from '../screens/toolbar/Toolbar';
@@ -57,10 +56,6 @@ const Route = () => {
         <Stack.Screen
           name={Constants.SCREEN_HOME.KEY}
           component={Home}
-        />
-        <Stack.Screen
-          name={Constants.TOOL_BAR.KEY}
-          component={Toolbar}
         />
         <Stack.Screen
           name={Constants.SCREEN_REGISTER_INFO.KEY}
