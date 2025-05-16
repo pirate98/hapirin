@@ -25,7 +25,6 @@ import {
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
-import {Actions} from 'react-native-router-flux';
 import Constants, {
   BASE_URL,
   API_GET_INF0_HID_PREVIEW,
@@ -42,7 +41,6 @@ import memoize from 'lodash.memoize'; // Use for caching/memoize for better perf
 import {Color} from '../../colors/Colors';
 import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
-import Navigation from '../navigation/Navigation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import NotificationHandle from '../../../Notification';
 import scales from '../../styles/scales';
@@ -114,10 +112,10 @@ export default class PreviewHabit extends React.Component {
     // register hardware back button listener
     BackHandler.addEventListener('hardwareBackPress', () => {
       if (this.state.position === 5) {
-        Actions.pop();
+        this.props.navigation.pop()
         return true;
       } else {
-        Navigation.gotoListHabit({
+        this.props.navigation.navigate(Constants.SCREEN_LIST_HABIT, {
           position: this.state.position,
           ID: this.state.name,
         });
@@ -228,7 +226,7 @@ export default class PreviewHabit extends React.Component {
       this.updateInfoHabit('back');
     } else {
       this.enableUpdate = false;
-      Actions.pop({
+      this.props.navigation.navigate({
         position: this.state.position,
         ID: this.state.name,
       });

@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
-import {Actions} from 'react-native-router-flux';
+
 import Constants from '../../constants/Constants';
 // multi languages
 import * as RNLocalize from 'react-native-localize';
@@ -29,7 +29,6 @@ import ListAllHabit from '../list_habit/ListAllHabit';
 import ListHabitHealth from '../list_habit/ListHabitHealth';
 import ListHabitLearning from '../list_habit/ListHabitLearning';
 import ListHabitContribution from '../list_habit/ListHabitContribution';
-import Navigation from '../navigation/Navigation';
 
 const translationGetters = {
   //lazy requires (metro bundler does not support symlinks)
@@ -74,7 +73,7 @@ export default class ListHabit extends React.Component {
   componentDidMount() {
     // register hardware back button listener
     BackHandler.addEventListener('hardwareBackPress', () => {
-      Navigation.navigateToHome();
+      this.props.navigation.navigate(Constants.SCREEN_HOME.KEY)
       return true;
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -92,7 +91,7 @@ export default class ListHabit extends React.Component {
   };
 
   onClickRightButton = position => {
-    Actions[Constants.SCREEN_CREATE_HABIT.KEY]({
+    this.props.navigation.navigate(Constants.SCREEN_CREATE_HABIT.KEY, {
       position: position,
       onBack: this.handleStatusTags.bind(this),
     });
@@ -106,7 +105,7 @@ export default class ListHabit extends React.Component {
     this.props.navigation.state.params.onBack1({
       refresh: new Date().getTime(),
     });
-    Actions.pop();
+    this.props.navigation.pop()
   };
 
   onClickAllButton = () => {
@@ -134,7 +133,7 @@ export default class ListHabit extends React.Component {
   };
 
   onPressItem({Name, idHabit, position, hour, min}) {
-    Actions[Constants.SCREEN_PREVIEW_HABIT.KEY]({
+    this.props.navigation.navigate(Constants.SCREEN_PREVIEW_HABIT.KEY, {
       Name: Name,
       idHabit: idHabit,
       position: position,

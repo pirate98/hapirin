@@ -27,7 +27,6 @@ import {
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
-import {Actions} from 'react-native-router-flux';
 import Constants, {
   BASE_URL,
   API_CHARING_HABIT_TODAY,
@@ -47,7 +46,6 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {Color} from '../../colors/Colors';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
-import Navigation from '../navigation/Navigation';
 import moment from 'moment';
 import SoundService from '../../soundService/SoundService';
 import scales from '../../styles/scales';
@@ -172,7 +170,7 @@ export default class CreatHabitOnlyToday extends React.Component {
   };
 
   onClickBackButton = () => {
-    Actions.pop();
+    this.props.navigation.pop()
   };
 
   // random text with mode when click mode
@@ -1286,7 +1284,7 @@ export default class CreatHabitOnlyToday extends React.Component {
   }
 
   onClickRightButton() {
-    Navigation.navigateToHome();
+    this.props.navigation.navigate(Constants.SCREEN_HOME.KEY)
   }
 
   render() {
@@ -1309,7 +1307,7 @@ export default class CreatHabitOnlyToday extends React.Component {
                 <TouchableOpacity
                   style={[styles.itemButton1]}
                   onPress={() => {
-                    Actions.pop();
+                    this.props.navigation.pop()
                   }}>
                   <FastImage
                     style={styles.textButton}

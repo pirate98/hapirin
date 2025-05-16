@@ -53,7 +53,8 @@ const LIST_IMG_NM = [
 
 const POSITION_CHARIN_HISTORY = 5;
 
-const CharinHistory = ({ID, date}) => {
+const CharinHistory = ({navigation, route}) => {
+  const { ID, date} = route.params;
   const navigation = useNavigation();
   const [locale, setLocale] = useState(RNLocalize.getLocales()[0]?.languageTag);
 

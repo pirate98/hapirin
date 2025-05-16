@@ -12,10 +12,9 @@ import {
   Dimensions,
   Platform,
 } from 'react-native';
-import Navigation from '../navigation/Navigation';
 import ViewPager from '@react-native-community/viewpager';
 import {moderateScale, verticalScale} from 'react-native-size-matters';
-import {Actions} from 'react-native-router-flux';
+
 import SoundService from '../../soundService/SoundService';
 import FastImage from '@d11/react-native-fast-image';
 import TouchableDebounce from '../../commons/components/TouchableDebounce';
@@ -176,9 +175,9 @@ export default class Introduce extends React.Component {
             onPress={async () => {
               await SoundService.loadSoundSel('sel.mp3');
               if (this.state.screen !== '') {
-                Actions.pop();
+                this.props.navigation.pop()
               } else {
-                Navigation.gotoPrivacy();
+                this.props.navigation.navigate(Constants.SCREEN_PRIVACY.KEY)
               }
             }}
             style={styles.touchablehighlightcss}>
@@ -231,9 +230,9 @@ export default class Introduce extends React.Component {
                 onPress={async () => {
                   await SoundService.loadSoundSel('sel.mp3');
                   if (this.state.screen !== '') {
-                    Actions.pop();
+                    this.props.navigation.pop()
                   } else {
-                    Navigation.gotoPrivacy();
+                    this.props.navigation.navigate(Constants.SCREEN_PRIVACY.KEY)
                   }
                 }}
                 style={styles.touchablehighlightcss}>
@@ -254,9 +253,9 @@ export default class Introduce extends React.Component {
                   onPress={async () => {
                     await SoundService.loadSoundSel('sel.mp3');
                     if (this.state.screen !== '') {
-                      Actions.pop();
+                      this.props.navigation.pop()
                     } else {
-                      Navigation.gotoPrivacy();
+                      this.props.navigation.navigate(Constants.SCREEN_PRIVACY.KEY)
                     }
                   }}
                   style={styles.touchablehighlightbutton}>

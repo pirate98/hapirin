@@ -40,7 +40,6 @@ import i18n from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better performance
 import {Color} from '../../colors/Colors';
 import {moderateScale, verticalScale} from 'react-native-size-matters';
-import Navigation from '../navigation/Navigation';
 import {getUserInfo} from '../../databases/StorageServices';
 import moment from 'moment';
 import SoundService from '../../soundService/SoundService';
@@ -48,7 +47,6 @@ import {RadioButton, RadioGroup} from 'react-native-flexi-radio-button';
 import ModalDropdown from 'react-native-modal-dropdown';
 import scales from '../../styles/scales';
 import FastImage from '@d11/react-native-fast-image';
-import {Actions} from 'react-native-router-flux';
 
 const translationGetters = {
   //lazy requires (metro bundler does not support symlinks)
@@ -149,7 +147,7 @@ export default class ChooseHabitCharing extends React.Component {
     AppState.addEventListener('change', this._handleAppStateChange);
     // register hardware back button listener
     BackHandler.addEventListener('hardwareBackPress', () => {
-      Navigation.navigateToHome();
+      this.props.navigate(Constants.SCREEN_HOME.KEY)
       return true;
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -210,11 +208,10 @@ export default class ChooseHabitCharing extends React.Component {
   };
 
   onClickBackButton = () => {
-    // Navigation.gotoHome('back');
     this.props.navigation.state.params.onBack({
       refresh: new Date().getTime(),
     });
-    Actions.pop();
+    this.props.navigation.pop()
   };
 
   getUserInfoFromDB = async () => {
@@ -1591,7 +1588,7 @@ export default class ChooseHabitCharing extends React.Component {
               <TouchableOpacity
                 style={[styles.itemButton2]}
                 onPress={() =>
-                  Navigation.gotoCreateHabitOnlyToday({
+                  this.props.navigate(Constants.SCREEN_CREATE_HABIT, {
                     IdUser: this.state.ID_User,
                   })
                 }>

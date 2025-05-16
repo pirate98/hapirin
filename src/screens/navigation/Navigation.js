@@ -1,4 +1,4 @@
-import {Actions} from 'react-native-router-flux';
+
 import Constants from '../../constants/Constants';
 
 export default class Navigation {

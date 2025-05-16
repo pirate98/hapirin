@@ -49,7 +49,6 @@ import NotificationHandle from '../../../Notification';
 import DateTimeUtil from '../../commons/DateTimeUtil';
 import scales from '../../styles/scales';
 import FastImage from '@d11/react-native-fast-image';
-import {Actions} from 'react-native-router-flux';
 import ScrollPicker from '../../utils/ScrollPicker';
 import platforms from '../../utils/platforms';
 const {TaskManager} = NativeModules;
@@ -112,7 +111,7 @@ export default class CreateHabit extends React.Component {
   componentDidMount() {
     // register hardware back button listener
     BackHandler.addEventListener('hardwareBackPress', () => {
-      Actions.pop({
+      this.props.navigation.navigate({
         position: this.state.position,
         ID: this.state.userInfo.ID,
       });
@@ -153,7 +152,7 @@ export default class CreateHabit extends React.Component {
   };
 
   onClickBackButton = () => {
-    Actions.pop({
+    this.props.navigation.navigate({
       position: this.state.position,
       ID: this.state.userInfo.ID,
     });
@@ -374,7 +373,7 @@ export default class CreateHabit extends React.Component {
   comebackListHabit = () => {
     this.setState({isLoading: false});
     //nagative to list with position
-    Actions.pop();
+    this.props.navigation.pop()
     this.props.navigation.state.params.onBack({
       position: this.state.type_habit,
       ID: this.state.userInfo.ID,

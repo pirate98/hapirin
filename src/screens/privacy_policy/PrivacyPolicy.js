@@ -6,7 +6,6 @@ import React from 'react';
 import {StyleSheet, View, BackHandler, ActivityIndicator} from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
-import {Actions} from 'react-native-router-flux';
 import Constants from '../../constants/Constants';
 import {WebView} from 'react-native-webview';
 import {Color} from '../../colors/Colors';
@@ -36,7 +35,7 @@ export default class PrivacyPolicys extends React.Component {
   };
 
   onClickBackButton = () => {
-    Actions.pop();
+    this.props.navigation.pop()
   };
 
   showSpinner() {

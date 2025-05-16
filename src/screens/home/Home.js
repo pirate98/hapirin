@@ -24,7 +24,6 @@ import {
   NativeModules,
 } from 'react-native';
 
-import {Actions} from 'react-native-router-flux';
 import Constants, {
   BASE_URL,
   API_GET_UcntLd,
@@ -36,7 +35,6 @@ import Constants, {
   widthScreen,
   heightScreen,
 } from '../../constants/Constants';
-import Navigation from '../navigation/Navigation';
 // multi languages
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
@@ -70,7 +68,7 @@ const setI18nConfig = () => {
   const fallback = {languageTag: 'jp', isRTL: false};
 
   const {languageTag, isRTL} =
-    RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
+    RNLocalize.findBestLanguageTag(Object.keys(translationGetters)) ||
     fallback;
 
   // clear translation cache
@@ -184,11 +182,11 @@ export default class Home extends React.Component {
 
     // register hardware back button listener
     BackHandler.addEventListener('hardwareBackPress', () => {
-      if (Actions.currentScene === Constants.SCREEN_HOME.KEY) {
+      if (this.props.navigation.isFocused()) {
         BackHandler.exitApp();
         return false;
       }
-      Actions.pop();
+      this.props.navigation.pop()
       return true;
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -581,18 +579,18 @@ export default class Home extends React.Component {
       hm_SetTime: [],
       hm_AddWd: [],
     });
-    Actions[Constants.SCREEN_CHOOSE_HABIT_CHARING.KEY]({
+    this.props.navigation.navigate(Constants.SCREEN_CHOOSE_HABIT_CHARING.KEY, {
       onBack: this.handleStatusTags.bind(this),
     });
   };
 
   handleStatusTags(data) {
-    this.setState({refresh: data.refresh});
+    this.setState({ refresh: data.refresh });
   }
 
   onPressHabitType1 = () => {
     SoundService.loadSoundSel('sel.mp3');
-    Actions[Constants.SCREEN_LIST_HABIT.KEY]({
+    this.props.navigation.navigate(Constants.SCREEN_LIST_HABIT.KEY, {
       ID: this.state.userInfo.ID,
       position: Constants.MODE_HEALTH,
       onBack1: this.handleStatusTags.bind(this),
@@ -601,7 +599,7 @@ export default class Home extends React.Component {
 
   onPressHabitType2 = () => {
     SoundService.loadSoundSel('sel.mp3');
-    Actions[Constants.SCREEN_LIST_HABIT.KEY]({
+    this.props.navigation.navigate(Constants.SCREEN_LIST_HABIT.KEY, {
       ID: this.state.userInfo.ID,
       position: Constants.MODE_LEARNING,
       onBack1: this.handleStatusTags.bind(this),
@@ -610,7 +608,7 @@ export default class Home extends React.Component {
 
   onPressHabitType3 = () => {
     SoundService.loadSoundSel('sel.mp3');
-    Actions[Constants.SCREEN_LIST_HABIT.KEY]({
+    this.props.navigation.navigate(Constants.SCREEN_LIST_HABIT.KEY, {
       ID: this.state.userInfo.ID,
       position: Constants.MODE_CONTRIBUTION,
       onBack1: this.handleStatusTags.bind(this),
@@ -619,7 +617,7 @@ export default class Home extends React.Component {
 
   onListPress = () => {
     SoundService.loadSoundSel('sel.mp3');
-    Actions[Constants.SCREEN_LIST_HABIT.KEY]({
+    this.props.navigation.navigate(Constants.SCREEN_LIST_HABIT.KEY, {
       ID: this.state.userInfo.ID,
       position: Constants.MODE_ALL,
       onBack1: this.handleStatusTags.bind(this),
@@ -628,14 +626,14 @@ export default class Home extends React.Component {
 
   onCalendarPress = () => {
     SoundService.loadSoundSel('sel.mp3');
-    Navigation.gotoCalendar();
+    this.props.navigation.navigate(Constants.SCREEN_CALENDAR.KEY)
     // alert('go to Calendar');
   };
 
   onSettingPress = () => {
     SoundService.loadSoundSel('sel.mp3');
     // Navigation.gotoOtherSetting();
-    Actions[Constants.SCREEN_OTHER.KEY]({
+    this.props.navigation.navigate(Constants.SCREEN_OTHER.KEY, {
       onBack: this.handleStatusTags.bind(this),
     });
   };

@@ -18,13 +18,12 @@ import {
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
-import {Actions} from 'react-native-router-flux';
+
 import Constants from '../../constants/Constants';
 // multi languages
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better performance
-import Navigation from '../navigation/Navigation';
 import WebView from 'react-native-webview';
 import {Color} from '../../colors/Colors';
 
@@ -70,7 +69,7 @@ export default class PdfView extends React.Component {
   componentDidMount() {
     // register hardware back button listener
     BackHandler.addEventListener('hardwareBackPress', () => {
-      Navigation.gotoPrivacy();
+      this.props.navigation.navigate(Constants.SCREEN_PRIVACY.KEY)
       return true;
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -92,7 +91,7 @@ export default class PdfView extends React.Component {
   };
 
   onClickBackButton = () => {
-    Actions.pop();
+    this.props.navigation.pop()
   };
 
   renderActivityIndicator() {

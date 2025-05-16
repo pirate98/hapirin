@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Constants from '../constants/Constants';
 
-import Toolbar from '../screens/toolbar/Toolbar';
 import Home from '../screens/home/Home';
 import Settings from '../screens/settings/Settings';
 import RegisterInfo from '../screens/register/RegisterInfo';

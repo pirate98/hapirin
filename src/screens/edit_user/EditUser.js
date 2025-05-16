@@ -25,7 +25,6 @@ import {
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
-import {Actions} from 'react-native-router-flux';
 import Constants, {
   BASE_URL,
   API_UPDATE_USER_INFO,
@@ -156,7 +155,7 @@ export default class RegisterInfo extends React.Component {
   };
 
   onClickBackButton = () => {
-    Actions.pop();
+    this.props.navigation.pop()
   };
 
   onSelectedIndex() {
@@ -212,7 +211,7 @@ export default class RegisterInfo extends React.Component {
             updateUser(newUser)
               .then(() => {
                 this.setState({isLoading: false}, () => {
-                  Actions.pop();
+                  this.props.navigation.pop()
                 });
               })
               .catch(error => {

@@ -21,7 +21,6 @@ import {
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
-import {Actions} from 'react-native-router-flux';
 import Constants from '../../constants/Constants';
 // multi languages
 import * as RNLocalize from 'react-native-localize';
