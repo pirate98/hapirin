@@ -10,6 +10,7 @@ import {
   Platform,
   StatusBar,
   AppState,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
@@ -21,7 +22,6 @@ import {Color} from '../../colors/Colors';
 import {moderateScale} from 'react-native-size-matters';
 import ChooseHabitCharing from './ChooseHabitCharing';
 import CreateHabitOnlyToday from './CreateHabitOnlyToday';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const translationGetters = {
   jp: () => require('../../languages/japanese.json'),
@@ -88,7 +88,7 @@ const Charing = ({ navigation }) => {
   });
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAvoidingView>
       <View style={styles.parent}>
         <Toolbar
           leftIcon="home"
@@ -123,7 +123,7 @@ const Charing = ({ navigation }) => {
           </View>
         </View>
       </View>
-    </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

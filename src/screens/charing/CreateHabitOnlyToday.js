@@ -24,6 +24,7 @@ import {
   Platform,
   ActivityIndicator,
   SafeAreaView,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
@@ -42,7 +43,6 @@ import Constants, {
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better performance
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {Color} from '../../colors/Colors';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
@@ -1290,7 +1290,7 @@ export default class CreatHabitOnlyToday extends React.Component {
   render() {
     const {isLoading, isSuccess} = this.state;
     return (
-      <KeyboardAwareScrollView>
+      <KeyboardAvoidingView>
         <View style={styles.parent}>
           <Toolbar
             leftIcon="back"
@@ -1340,7 +1340,7 @@ export default class CreatHabitOnlyToday extends React.Component {
           )}
           {this.showImageCombo()}
         </View>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }

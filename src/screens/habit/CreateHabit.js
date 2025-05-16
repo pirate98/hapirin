@@ -44,7 +44,6 @@ import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import TextFont from '../../commons/components/TextFont';
 import {getUserInfo} from '../../databases/StorageServices';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import NotificationHandle from '../../../Notification';
 import DateTimeUtil from '../../commons/DateTimeUtil';
 import scales from '../../styles/scales';

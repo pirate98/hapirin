@@ -41,7 +41,6 @@ import memoize from 'lodash.memoize'; // Use for caching/memoize for better perf
 import {Color} from '../../colors/Colors';
 import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import NotificationHandle from '../../../Notification';
 import scales from '../../styles/scales';
 import FastImage from '@d11/react-native-fast-image';

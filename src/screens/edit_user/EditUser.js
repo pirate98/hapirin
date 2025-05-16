@@ -22,6 +22,7 @@ import {
   ActivityIndicator,
   Alert,
   Keyboard,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
@@ -47,7 +48,6 @@ import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {updateUser} from '../../databases/StorageServices';
 
 import {getUserInfo} from '../../databases/StorageServices';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import scales from '../../styles/scales';
 import FastImage from '@d11/react-native-fast-image';
 
@@ -284,7 +284,7 @@ export default class RegisterInfo extends React.Component {
           onClickRightButton={() => this.onClickRightButton()}
           title={Constants.SCREEN_REGISTER_INFO.TITLE}
         />
-        <KeyboardAwareScrollView>
+        <KeyboardAvoidingView>
           <View style={styles.content}>
             <FastImage
               resizeMode={FastImage.resizeMode.stretch}
@@ -442,7 +442,7 @@ export default class RegisterInfo extends React.Component {
               size="large"
             />
           )}
-        </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
       </View>
     );
   }

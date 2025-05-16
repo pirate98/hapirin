@@ -22,6 +22,7 @@ import {
   StatusBar,
   Platform,
   NativeModules,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
@@ -52,7 +53,6 @@ import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {insertUser} from '../../databases/StorageServices';
 import {Color} from '../../colors/Colors';
 
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SoundService from '../../soundService/SoundService';
 import scales from '../../styles/scales';
 import FastImage from '@d11/react-native-fast-image';
@@ -346,7 +346,7 @@ export default class RegisterInfo extends React.Component {
           onClickRightButton={() => this.onClickRightButton()}
           title={Constants.SCREEN_REGISTER_INFO.TITLE}
         />
-        <KeyboardAwareScrollView style={styles.content}>
+        <KeyboardAvoidingView style={styles.content}>
           <View style={styles.viewContent}>
             <FastImage
               style={styles.image}
@@ -503,7 +503,7 @@ export default class RegisterInfo extends React.Component {
               size="large"
             />
           )}
-        </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
       </View>
     );
   }
