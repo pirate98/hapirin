@@ -27,6 +27,7 @@
     "react-native-check-box": "^2.1.7",
     "react-native-email": "^2.1.0",
     "react-native-flexi-radio-button": "^0.2.2",
+    "react-native-gesture-handler": "^2.25.0",
     "react-native-localize": "^3.4.1",
     "react-native-modal-dropdown": "^1.0.2",
     "react-native-rate": "^1.2.12",
