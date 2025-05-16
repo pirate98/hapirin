@@ -129,10 +129,11 @@ export default class Home extends React.Component {
     };
 
     this.backHandler = null;
+    this.appStateHandler = null;
   }
 
   componentDidMount() {
-    AppState.addEventListener('change', this._handleAppStateChange);
+    this.appStateHandler = AppState.addEventListener('change', this._handleAppStateChange);
     this.getFbDay();
     getUserInfo()
       .then(userInfo => {
@@ -193,7 +194,7 @@ export default class Home extends React.Component {
       this.props.navigation.pop()
       return true;
     });
-      }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.refresh !== this.state.refresh) {
@@ -262,7 +263,7 @@ export default class Home extends React.Component {
   UNSAFE_componentWillUnMount() {
     // unregister hardware back button listener
     this.backHandler.remove()
-    AppState.removeEventListener('change', this._handleAppStateChange);
+    this.appStateHandler.remove()
   }
 
   _handleAppStateChange = currentAppState => {

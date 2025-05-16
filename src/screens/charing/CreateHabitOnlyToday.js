@@ -95,6 +95,7 @@ export default class CreatHabitOnlyToday extends React.Component {
     this.audioCombo2 = undefined;
     this.pressMode = false;
     this.backHander = null;
+    this.appStateHandler = null;
 
     const {IdUser} = this.props;
     this.state = {
@@ -135,7 +136,7 @@ export default class CreatHabitOnlyToday extends React.Component {
   }
 
   async componentDidMount() {
-    AppState.addEventListener('change', this._handleAppStateChange);
+    this.appStateHandler = AppState.addEventListener('change', this._handleAppStateChange);
     // register hardware back button listener
     this.backHander = BackHandler.addEventListener('hardwareBackPress', () => {
       // Actions.pop();
@@ -150,7 +151,7 @@ export default class CreatHabitOnlyToday extends React.Component {
   componentWillUnmount() {
     // unregister hardware back button listener
     this.backHander.remove()
-    AppState.removeEventListener('change', this._handleAppStateChange);
+    this.appStateHandler.remove()
     
   }
 
