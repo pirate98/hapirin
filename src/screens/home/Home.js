@@ -193,7 +193,7 @@ export default class Home extends React.Component {
       this.props.navigation.pop()
       return true;
     });
-  }
+      }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.refresh !== this.state.refresh) {
@@ -263,6 +263,7 @@ export default class Home extends React.Component {
     // unregister hardware back button listener
     this.backHandler.remove()
     AppState.removeEventListener('change', this._handleAppStateChange);
+  }
 
   _handleAppStateChange = currentAppState => {
     if (currentAppState === 'background') {
