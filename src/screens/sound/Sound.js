@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 
 import Toolbar from '../toolbar/Toolbar';
-import { Actions } from 'react-native-router-flux';
 import Constants from '../../constants/Constants';
 // multi languages
 import * as RNLocalize from 'react-native-localize';
@@ -134,7 +133,7 @@ export default class Sound extends React.Component {
   };
 
   onClickBackButton = () => {
-    Actions.pop();
+    this.props.navigation.pop()
   };
 
   render() {
@@ -243,7 +242,7 @@ export default class Sound extends React.Component {
         <TouchableOpacity
           style={styles.viewSetting}
           onPress={() => {
-            Actions.pop();
+            this.props.navigation.pop()
           }}>
           {/* <Text style={styles.textSetting}>{translate('setting')}</Text> */}
           <FastImage

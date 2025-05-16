@@ -484,7 +484,7 @@ export default class PreviewHabit extends React.Component {
             text: 'Yes',
             onPress: () => {
               if (mode === 'back') {
-                Actions.pop({
+                this.props.navigation.pop({
                   position: this.state.position,
                   ID: this.state.name,
                 });
@@ -819,7 +819,7 @@ export default class PreviewHabit extends React.Component {
 
   comebackListHabit = () => {
     this.setState({isLoading: false});
-    Actions.pop();
+    this.props.navigation.pop()
     this.props.navigation.state.params.onBack({
       position: this.state.position,
       ID: this.state.name,
