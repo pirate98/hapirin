@@ -44,6 +44,23 @@ const widthScreen = Dimensions.get('window').width;
 const heightScreen = Dimensions.get('window').height;
 const IMAGES_PER_ROW = 3;
 
+const imageMap = {
+  'sonohoka_01.png': require('../../resources/images/20181029/opg/sonohoka_01.png'),
+  'sonohoka_02.png': require('../../resources/images/20181029/opg/sonohoka_02.png'),
+  'sonohoka_03.png': require('../../resources/images/20181029/opg/sonohoka_03.png'),
+  'sonohoka_04.png': require('../../resources/images/20181029/opg/sonohoka_04.png'),
+  'sonohoka_05.png': require('../../resources/images/20181029/opg/sonohoka_05.png'),
+  'sonohoka_06.png': require('../../resources/images/20181029/opg/sonohoka_06.png'),
+  'sonohoka_07.png': require('../../resources/images/20181029/opg/sonohoka_07.png'),
+  'sonohoka_08.png': require('../../resources/images/20181029/opg/sonohoka_08.png'),
+  'sonohoka_09.png': require('../../resources/images/20181029/opg/sonohoka_09.png'),
+  'sonohoka_10.png': require('../../resources/images/20181029/opg/sonohoka_10.png'),
+  'sonohoka_11.png': require('../../resources/images/20181029/opg/sonohoka_11.png'),
+  'sonohoka_12.png': require('../../resources/images/20181029/opg/sonohoka_12.png'),
+  'sonohoka_13.png': require('../../resources/images/20181029/opg/sonohoka_13.png'),
+};
+
+
 const Settings = () => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -158,7 +175,7 @@ const Settings = () => {
               <FastImage
                 style={styles.itemImage}
                 resizeMode={FastImage.resizeMode.stretch}
-                source={require(`../../resources/images/20181029/opg/${img}`)}
+                source={imageMap[img]}
               />
             </TouchableOpacity>
           ))}
@@ -174,7 +191,7 @@ const Settings = () => {
               <FastImage
                 style={styles.itemImage}
                 resizeMode={FastImage.resizeMode.stretch}
-                source={require(`../../resources/images/20181029/opg/${img}`)}
+                source={imageMap[img]}
               />
             </TouchableOpacity>
           ))}
@@ -192,9 +209,9 @@ const Settings = () => {
             <FastImage
               style={styles.itemHorizontalBar}
               resizeMode={FastImage.resizeMode.contain}
-              source={require('../../resources/images/20181029/opg/sonohoka_07.png')}
+              source={imageMap[img]}
             />
-            {renderOptionButton(async () => { await playSelectSound(); handler(); }, require(`../../resources/images/20181029/opg/${img}`), style)}
+            {renderOptionButton(async () => { await playSelectSound(); handler(); }, imageMap[img], style)}
           </React.Fragment>
         ))}
       </View>
