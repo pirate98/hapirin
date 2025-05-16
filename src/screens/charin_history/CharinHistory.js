@@ -10,7 +10,6 @@ import {
   ActivityIndicator,
   AppState,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import memoize from 'lodash.memoize';
@@ -55,7 +54,6 @@ const POSITION_CHARIN_HISTORY = 5;
 
 const CharinHistory = ({navigation, route}) => {
   const { ID, date} = route.params;
-  const navigation = useNavigation();
   const [locale, setLocale] = useState(RNLocalize.getLocales()[0]?.languageTag);
 
   const [time, setTime] = useState('');

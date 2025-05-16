@@ -24,8 +24,6 @@ import {
   NativeModules,
 } from 'react-native';
 
-import Navigation from '../navigation/Navigation';
-
 import Toolbar from '../toolbar/Toolbar';
 import Constants, {
   BASE_URL,
@@ -120,7 +118,7 @@ export default class RegisterInfo extends React.Component {
   async componentDidMount() {
     // register hardware back button listener
     BackHandler.addEventListener('hardwareBackPress', () => {
-      Navigation.gotoStart();
+      this.props.navigation.navigate(Constants.SCREEN_START.KEY)
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
 
@@ -142,7 +140,7 @@ export default class RegisterInfo extends React.Component {
   };
 
   onClickBackButton = () => {
-    Navigation.gotoStart();
+    this.props.navigation.navigate(Constants.SCREEN_START.KEY)
   };
 
   register() {
@@ -208,7 +206,7 @@ export default class RegisterInfo extends React.Component {
                     };
                     insertUser(newUser)
                       .then(() => {
-                        Navigation.gotoConfirm();
+                        this.props.navigation.navigate(Constants.SCREEN_CONFIRM.KEY)
                       })
                       .catch(error => {
                         this.setState({
@@ -491,7 +489,6 @@ export default class RegisterInfo extends React.Component {
             <TouchableOpacity
               style={styles.buttonCharing}
               onPress={() => {
-                // Navigation.gotoConfirm();
                 this.register();
               }}>
               <Text style={styles.textCharing}>

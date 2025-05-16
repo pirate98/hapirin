@@ -573,7 +573,6 @@ export default class Home extends React.Component {
 
   onCharingPress = () => {
     SoundService.loadSoundSel('sel.mp3');
-    // Navigation.gotoChooseHabitCharing();
     this.setState({
       hm_ID: [],
       hm_SetTime: [],
@@ -632,7 +631,6 @@ export default class Home extends React.Component {
 
   onSettingPress = () => {
     SoundService.loadSoundSel('sel.mp3');
-    // Navigation.gotoOtherSetting();
     this.props.navigation.navigate(Constants.SCREEN_OTHER.KEY, {
       onBack: this.handleStatusTags.bind(this),
     });

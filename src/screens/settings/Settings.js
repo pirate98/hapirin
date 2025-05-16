@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import Toolbar from '../toolbar/Toolbar';
 import Constants from '../../constants/Constants';
-import Navigation from '../navigation/Navigation';
 import email from 'react-native-email';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
@@ -46,7 +45,7 @@ const heightScreen = Dimensions.get('window').height;
 const IMAGES_PER_ROW = 3;
 
 const Settings = () => {
-  const navigation = useNavigation < any > ();
+  const navigation = useNavigation();
   const route = useRoute();
 
   const [locale, setLocale] = useState(RNLocalize.getLocales()[0]?.languageTag);
@@ -151,7 +150,7 @@ const Settings = () => {
       <View style={styles.content}>
         <View style={styles.viewRow1}>
           {[
-            [Navigation.gotoEditUser, 'sonohoka_01.png'],
+            [this.props.navigation.navigate(Constants.SCREEN_EDIT_USER.KEY), 'sonohoka_01.png'],
             [() => Navigation.gotoIntroduceInfo({ screen: 'setting' }), 'sonohoka_02.png'],
             [Navigation.gotoWebview, 'sonohoka_03.png'],
           ].map(([handler, img], index) => (

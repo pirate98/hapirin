@@ -18,7 +18,6 @@ import {
   Platform,
 } from 'react-native';
 import Constants from '../../constants/Constants';
-import Navigation from '../navigation/Navigation';
 import {moderateScale} from 'react-native-size-matters';
 import Toolbar from '../toolbar/Toolbar';
 import {Color} from '../../colors/Colors';
@@ -71,7 +70,7 @@ export default class Privacy extends React.Component {
   async componentDidMount() {
     // register hardware back button listener
     BackHandler.addEventListener('hardwareBackPress', () => {
-      Navigation.gotoStart();
+      this.props.navigation.navigate(Constants.SCREEN_START.KEY)
       return true;
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -86,7 +85,7 @@ export default class Privacy extends React.Component {
   }
 
   onClickBackButton = () => {
-    Navigation.gotoStart();
+    this.props.navigation.navigate(Constants.SCREEN_START.KEY)
   };
 
   handleLocalizationChange = () => {
@@ -118,7 +117,7 @@ export default class Privacy extends React.Component {
             style={styles.viewLinkPdf}
             onPress={async () => {
               await SoundService.loadSoundSel('sel.mp3');
-              Navigation.gotoPdfView();
+              this.props.navigation.navigate(Constants.SCREEN_PDF_VIEW.KEY)
             }}>
             <FastImage
               style={styles.textpoli}
@@ -157,7 +156,7 @@ export default class Privacy extends React.Component {
             onPress={async () => {
               await SoundService.loadSoundSel('sel.mp3');
               if (this.state.checkPolicy) {
-                Navigation.navigateToRegisterInfo();
+                this.props.navigation.navigate(Constants.SCREEN_REGISTER_INFO.KEY)
               } else {
                 Alert.alert(
                   translate('warning_dialog'),
