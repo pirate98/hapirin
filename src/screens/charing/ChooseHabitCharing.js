@@ -1589,7 +1589,7 @@ export default class ChooseHabitCharing extends React.Component {
               <TouchableOpacity
                 style={[styles.itemButton2]}
                 onPress={() =>
-                  this.props.navigate(Constants.SCREEN_CREATE_HABIT, {
+                  this.props.navigate(Constants.SCREEN_CREATE_HABIT.KEY, {
                     IdUser: this.state.ID_User,
                   })
                 }>

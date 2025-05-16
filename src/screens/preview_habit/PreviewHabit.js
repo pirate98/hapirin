@@ -118,7 +118,7 @@ export default class PreviewHabit extends React.Component {
         this.props.navigation.pop()
         return true;
       } else {
-        this.props.navigation.navigate(Constants.SCREEN_LIST_HABIT, {
+        this.props.navigation.navigate(Constants.SCREEN_LIST_HABIT.KEY, {
           position: this.state.position,
           ID: this.state.name,
         });
