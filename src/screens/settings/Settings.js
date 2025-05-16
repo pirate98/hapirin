@@ -151,8 +151,8 @@ const Settings = () => {
         <View style={styles.viewRow1}>
           {[
             [this.props.navigation.navigate(Constants.SCREEN_EDIT_USER.KEY), 'sonohoka_01.png'],
-            [() => Navigation.gotoIntroduceInfo({ screen: 'setting' }), 'sonohoka_02.png'],
-            [Navigation.gotoWebview, 'sonohoka_03.png'],
+            [() => this.props.navigation.navigate(Constants.SCREEN_INTRODUCE.KEY, { screen: 'setting' }), 'sonohoka_02.png'],
+            [this.props.navigation.navigate(Constants.SCREEN_WEBVIEW.KEY), 'sonohoka_03.png'],
           ].map(([handler, img], index) => (
             <TouchableOpacity key={index} style={styles.itemRow} onPress={async () => { await playSelectSound(); handler(); }}>
               <FastImage
@@ -166,9 +166,9 @@ const Settings = () => {
 
         <View style={styles.viewRow2}>
           {[
-            [Navigation.gotoShareInfo, 'sonohoka_04.png'],
+            [this.props.navigation.navigate(Constants.SCREEN_SHARE_INFOR.KEY), 'sonohoka_04.png'],
             [handleRatePress, 'sonohoka_05.png'],
-            [Navigation.gotoNotificationInfo, 'sonohoka_06.png'],
+            [this.props.navigation.navigate(Constants.SCREEN_NOTIFICATION_INFO.KEY), 'sonohoka_06.png'],
           ].map(([handler, img], index) => (
             <TouchableOpacity key={index} style={styles.itemRow} onPress={async () => { await playSelectSound(); handler(); }}>
               <FastImage
@@ -181,12 +181,12 @@ const Settings = () => {
         </View>
 
         {[
-          [Navigation.gotoTermsOfService, styles.itemImageInfo1, 'sonohoka_08.png'],
-          [Navigation.gotoPrivacyPolicy, styles.itemImageInfo2, 'sonohoka_09.png'],
+          [this.props.navigation.navigate(Constants.SCREEN_TERMS_OF_SERVICE.KEY), styles.itemImageInfo1, 'sonohoka_08.png'],
+          [this.props.navigation.navigate(Constants.SCREEN_PRIVACY_POLICY.KEY), styles.itemImageInfo2, 'sonohoka_09.png'],
           [handleSendMail, styles.itemImageInfo3, 'sonohoka_10.png'],
-          [Navigation.gotoCompanyProfile, styles.itemImageInfo4, 'sonohoka_11.png'],
-          [Navigation.gotoVersions, styles.itemImageInfo5, 'sonohoka_12.png'],
-          [Navigation.gotoSound, styles.itemImageInfo6, 'sonohoka_13.png'],
+          [this.props.navigation.navigate(Constants.SCREEN_COMPANY_PROFILE.KEY), styles.itemImageInfo4, 'sonohoka_11.png'],
+          [this.props.navigation.navigate(Constants.SCREEN_VERSION.KEY), styles.itemImageInfo5, 'sonohoka_12.png'],
+          [this.props.navigation.navigate(Constants.SCREEN_SOUND.KEY), styles.itemImageInfo6, 'sonohoka_13.png'],
         ].map(([handler, style, img], index) => (
           <React.Fragment key={index}>
             <FastImage
