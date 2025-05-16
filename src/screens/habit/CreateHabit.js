@@ -107,11 +107,13 @@ export default class CreateHabit extends React.Component {
       mode: undefined,
       listHabit: [],
     };
+
+    this.backHandler = null;
   }
 
   componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.navigate({
         position: this.state.position,
         ID: this.state.userInfo.ID,
@@ -139,7 +141,7 @@ export default class CreateHabit extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 

@@ -115,11 +115,13 @@ export default class RegisterInfo extends React.Component {
       valueSelect: 0,
     };
     setI18nConfig(); //set initial config
+
+    this.backHandler = null;
   }
 
   async componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.navigate(Constants.SCREEN_START.KEY)
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -129,7 +131,7 @@ export default class RegisterInfo extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 

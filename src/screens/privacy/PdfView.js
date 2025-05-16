@@ -66,11 +66,13 @@ export default class PdfView extends React.Component {
     this.state = {
       isLoading: true,
     };
+
+    this.backHandler = null;
   }
 
   componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.navigate(Constants.SCREEN_PRIVACY.KEY)
       return true;
     });
@@ -79,7 +81,7 @@ export default class PdfView extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 

@@ -94,6 +94,7 @@ export default class CreatHabitOnlyToday extends React.Component {
     this.audioCombo1 = undefined;
     this.audioCombo2 = undefined;
     this.pressMode = false;
+    this.backHander = null;
 
     const {IdUser} = this.props;
     this.state = {
@@ -136,7 +137,7 @@ export default class CreatHabitOnlyToday extends React.Component {
   async componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHander = BackHandler.addEventListener('hardwareBackPress', () => {
       // Actions.pop();
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -148,7 +149,7 @@ export default class CreatHabitOnlyToday extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHander.remove()
     AppState.removeEventListener('change', this._handleAppStateChange);
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }

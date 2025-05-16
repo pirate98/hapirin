@@ -107,11 +107,13 @@ export default class PreviewHabit extends React.Component {
       isShowModalExplain: false,
       mode: undefined,
     };
+
+    this.backHandler = null;
   }
 
   componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (this.state.position === 5) {
         this.props.navigation.pop()
         return true;
@@ -201,7 +203,7 @@ export default class PreviewHabit extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 

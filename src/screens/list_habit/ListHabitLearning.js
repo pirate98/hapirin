@@ -75,11 +75,13 @@ export default class ListHabitLearning extends React.Component {
       ID: props.ID,
       isLoading: true,
     };
+
+    this.backHandler = null;
   }
 
   componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       // Actions.pop();
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -154,7 +156,7 @@ export default class ListHabitLearning extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 

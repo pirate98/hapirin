@@ -63,12 +63,13 @@ export default class Confirm extends React.Component {
       gender: '',
       age: 0,
     };
+    this.backHandler = null;
     setI18nConfig(); //set initial config
   }
 
   async componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       // Actions.pop();
       return true;
     });
@@ -77,7 +78,7 @@ export default class Confirm extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 

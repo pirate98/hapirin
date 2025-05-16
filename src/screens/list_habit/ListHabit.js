@@ -70,11 +70,13 @@ export default class ListHabit extends React.Component {
       path: '',
       refresh: undefined,
     };
+
+    this.backHandler = null;
   }
 
   componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.navigate(Constants.SCREEN_HOME.KEY)
       return true;
     });
@@ -83,7 +85,7 @@ export default class ListHabit extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 

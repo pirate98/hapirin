@@ -67,11 +67,13 @@ export default class Privacy extends React.Component {
     this.state = {
       checkPolicy: false,
     };
+
+    this.backHandler = null;
   }
 
   async componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.navigate(Constants.SCREEN_START.KEY)
       return true;
     });
@@ -82,7 +84,7 @@ export default class Privacy extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 

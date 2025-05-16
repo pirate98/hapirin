@@ -127,6 +127,8 @@ export default class Home extends React.Component {
       refresh: undefined,
       Hpcnt: 0,
     };
+
+    this.backHandler = null;
   }
 
   componentDidMount() {
@@ -183,7 +185,7 @@ export default class Home extends React.Component {
     this.changeGreetingWithTime();
 
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       if (this.props.navigation.isFocused()) {
         BackHandler.exitApp();
         return false;
@@ -260,7 +262,7 @@ export default class Home extends React.Component {
 
   UNSAFE_componentWillUnMount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     AppState.removeEventListener('change', this._handleAppStateChange);
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }

@@ -16,18 +16,20 @@ export default class PrivacyPolicys extends React.Component {
     this.state = {
       isLoading: true,
     };
+
+    this.backHandler = null;
   }
 
   componentDidMount() {
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       // Actions.pop();
     });
   }
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
   }
 
   onClickRightButton = () => {

@@ -92,6 +92,7 @@ export default class ChooseHabitCharing extends React.Component {
     this.audioCombo1 = undefined;
     this.audioCombo2 = undefined;
     this.dropdownRef = React.createRef();
+    this.backHandler = null;
 
     this.state = {
       modeHabit: 0,
@@ -148,7 +149,7 @@ export default class ChooseHabitCharing extends React.Component {
   async componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigate(Constants.SCREEN_HOME.KEY)
       return true;
     });
@@ -167,7 +168,7 @@ export default class ChooseHabitCharing extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     AppState.removeEventListener('change', this._handleAppStateChange);
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }

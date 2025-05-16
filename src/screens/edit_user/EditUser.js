@@ -113,6 +113,8 @@ export default class RegisterInfo extends React.Component {
       age: '',
       userInfo: '',
     };
+
+    this.backHandler = null;
     setI18nConfig(); //set initial config
   }
 
@@ -136,7 +138,7 @@ export default class RegisterInfo extends React.Component {
         console.error(error);
       });
     // register hardware back button listener
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       // Actions.pop();
     });
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
@@ -144,7 +146,7 @@ export default class RegisterInfo extends React.Component {
 
   componentWillUnmount() {
     // unregister hardware back button listener
-    BackHandler.removeEventListener('hardwareBackPress');
+    this.backHandler.remove()
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 
