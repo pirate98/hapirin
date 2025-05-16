@@ -77,7 +77,7 @@ export default class Privacy extends React.Component {
       this.props.navigation.navigate(Constants.SCREEN_START.KEY)
       return true;
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    
 
     // audioBtn = await SoundService.loadSoundSel('sel.mp3');
   }
@@ -85,7 +85,7 @@ export default class Privacy extends React.Component {
   componentWillUnmount() {
     // unregister hardware back button listener
     this.backHandler.remove()
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    
   }
 
   onClickBackButton = () => {

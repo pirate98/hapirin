@@ -140,7 +140,7 @@ export default class CreatHabitOnlyToday extends React.Component {
     this.backHander = BackHandler.addEventListener('hardwareBackPress', () => {
       // Actions.pop();
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    
 
     this.audioCombo1 = await SoundService.loadSoundCombo('combox1.mp3');
     this.audioCombo2 = await SoundService.loadSoundCombo('combo_x2.mp3');
@@ -151,7 +151,7 @@ export default class CreatHabitOnlyToday extends React.Component {
     // unregister hardware back button listener
     this.backHander.remove()
     AppState.removeEventListener('change', this._handleAppStateChange);
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    
   }
 
   _handleAppStateChange = currentAppState => {

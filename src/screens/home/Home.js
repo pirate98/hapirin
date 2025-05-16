@@ -193,7 +193,6 @@ export default class Home extends React.Component {
       this.props.navigation.pop()
       return true;
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -264,8 +263,6 @@ export default class Home extends React.Component {
     // unregister hardware back button listener
     this.backHandler.remove()
     AppState.removeEventListener('change', this._handleAppStateChange);
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
-  }
 
   _handleAppStateChange = currentAppState => {
     if (currentAppState === 'background') {

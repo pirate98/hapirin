@@ -124,7 +124,7 @@ export default class RegisterInfo extends React.Component {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.navigate(Constants.SCREEN_START.KEY)
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    
 
     // audioBtn = await SoundService.loadSoundSel('sel.mp3');
   }
@@ -132,7 +132,7 @@ export default class RegisterInfo extends React.Component {
   componentWillUnmount() {
     // unregister hardware back button listener
     this.backHandler.remove()
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    
   }
 
   handleLocalizationChange = () => {

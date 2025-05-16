@@ -72,13 +72,13 @@ export default class Example extends React.Component {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       // Actions.pop();
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    
   }
 
   componentWillUnmount() {
     // unregister hardware back button listener
     this.backHandler.remove()
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    
   }
 
   handleLocalizationChange = () => {

@@ -153,7 +153,6 @@ export default class ChooseHabitCharing extends React.Component {
       this.props.navigate(Constants.SCREEN_HOME.KEY)
       return true;
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
 
     this.getUserInfoFromDB();
 
@@ -170,7 +169,6 @@ export default class ChooseHabitCharing extends React.Component {
     // unregister hardware back button listener
     this.backHandler.remove()
     AppState.removeEventListener('change', this._handleAppStateChange);
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 
   _dropdown_renderButtonText(rowData) {

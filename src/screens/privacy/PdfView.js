@@ -76,13 +76,13 @@ export default class PdfView extends React.Component {
       this.props.navigation.navigate(Constants.SCREEN_PRIVACY.KEY)
       return true;
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    
   }
 
   componentWillUnmount() {
     // unregister hardware back button listener
     this.backHandler.remove()
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    
   }
 
   handleLocalizationChange = () => {

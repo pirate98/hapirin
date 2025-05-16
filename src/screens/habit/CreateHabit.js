@@ -120,7 +120,7 @@ export default class CreateHabit extends React.Component {
       });
       return true;
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    
 
     getUserInfo()
       .then(userInfo => {
@@ -142,7 +142,7 @@ export default class CreateHabit extends React.Component {
   componentWillUnmount() {
     // unregister hardware back button listener
     this.backHandler.remove()
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    
   }
 
   handleLocalizationChange = () => {

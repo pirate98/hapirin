@@ -73,13 +73,13 @@ export default class Confirm extends React.Component {
       // Actions.pop();
       return true;
     });
-    RNLocalize.addEventListener('change', this.handleLocalizationChange);
+    
   }
 
   componentWillUnmount() {
     // unregister hardware back button listener
     this.backHandler.remove()
-    RNLocalize.removeEventListener('change', this.handleLocalizationChange);
+    
   }
 
   handleLocalizationChange = () => {
