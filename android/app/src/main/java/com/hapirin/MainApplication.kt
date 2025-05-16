@@ -1,4 +1,4 @@
-package com.haripin
+package com.hapirin
 
 import android.app.Application
 import com.facebook.react.PackageList
