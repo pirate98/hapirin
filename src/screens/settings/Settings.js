@@ -13,12 +13,14 @@ import Toolbar from '../toolbar/Toolbar';
 import Constants from '../../constants/Constants';
 import email from 'react-native-email';
 import * as RNLocalize from 'react-native-localize';
-import i18n from 'i18n-js';
+import {I18n} from 'i18n-js';
 import memoize from 'lodash.memoize';
 import Rate, { AndroidMarket } from 'react-native-rate';
 import SoundService from '../../soundService/SoundService';
 import FastImage from '@d11/react-native-fast-image';
 import { useNavigation, useRoute } from '@react-navigation/native';
+
+const i18n = new I18n()
 
 const translationGetters = {
   jp: () => require('../../languages/japanese.json'),

@@ -36,7 +36,7 @@ import Constants, {
 } from '../../constants/Constants';
 // multi languages
 import * as RNLocalize from 'react-native-localize';
-import i18n from 'i18n-js';
+import {I18n} from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better performance
 import {Color} from '../../colors/Colors';
 import {moderateScale, verticalScale} from 'react-native-size-matters';
@@ -49,6 +49,8 @@ import {getUserInfo} from '../../databases/StorageServices';
 import moment from 'moment';
 import platforms from '../../utils/platforms';
 const {TaskManager} = NativeModules;
+
+const i18n = new I18n()
 
 const translationGetters = {
   //lazy requires (metro bundler does not support symlinks)
@@ -65,7 +67,7 @@ const setI18nConfig = () => {
   const fallback = {languageTag: 'jp', isRTL: false};
 
   const {languageTag, isRTL} =
-    RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
+    RNLocalize.findBestLanguageTag(Object.keys(translationGetters)) ||
     fallback;
 
   // clear translation cache

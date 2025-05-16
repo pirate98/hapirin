@@ -24,10 +24,12 @@ import {Color} from '../../colors/Colors';
 import CheckBox from 'react-native-check-box';
 // multi languages
 import * as RNLocalize from 'react-native-localize';
-import i18n from 'i18n-js';
+import {I18n} from 'i18n-js';
 import memoize from 'lodash.memoize'; // Use for caching/memoize for better
 import SoundService from '../../soundService/SoundService';
 import FastImage from '@d11/react-native-fast-image';
+
+const i18n = new I18n()
 
 var heightScreen = Dimensions.get('window').height; //full height
 
@@ -46,7 +48,7 @@ const setI18nConfig = () => {
   const fallback = {languageTag: 'jp', isRTL: false};
 
   const {languageTag, isRTL} =
-    RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
+    RNLocalize.findBestLanguageTag(Object.keys(translationGetters)) ||
     fallback;
 
   // clear translation cache

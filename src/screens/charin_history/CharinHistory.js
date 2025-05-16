@@ -11,7 +11,7 @@ import {
   AppState,
 } from 'react-native';
 import * as RNLocalize from 'react-native-localize';
-import i18n from 'i18n-js';
+import {I18n} from 'i18n-js';
 import memoize from 'lodash.memoize';
 
 import Constants, {
@@ -21,6 +21,8 @@ import Constants, {
 import Toolbar from '../toolbar/Toolbar';
 import {Color} from '../../colors/Colors';
 import FastImage from '@d11/react-native-fast-image';
+
+const i18n = new I18n()
 
 // Localization setup
 const translationGetters = {
@@ -35,7 +37,7 @@ const translate = memoize(
 const setI18nConfig = () => {
   const fallback = {languageTag: 'jp', isRTL: false};
   const {languageTag, isRTL} =
-    RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
+    RNLocalize.findBestLanguageTag(Object.keys(translationGetters)) ||
     fallback;
 
   translate.cache.clear();

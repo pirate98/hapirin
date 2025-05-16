@@ -16,12 +16,14 @@ import {
 import Toolbar from '../toolbar/Toolbar';
 import Constants from '../../constants/Constants';
 import * as RNLocalize from 'react-native-localize';
-import i18n from 'i18n-js';
+import {I18n} from 'i18n-js';
 import memoize from 'lodash.memoize';
 import {Color} from '../../colors/Colors';
 import {moderateScale} from 'react-native-size-matters';
 import ChooseHabitCharing from './ChooseHabitCharing';
 import CreateHabitOnlyToday from './CreateHabitOnlyToday';
+
+const i18n = new I18n()
 
 const translationGetters = {
   jp: () => require('../../languages/japanese.json'),
