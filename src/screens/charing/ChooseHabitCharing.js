@@ -151,7 +151,7 @@ export default class ChooseHabitCharing extends React.Component {
     this.appStateHandler = AppState.addEventListener('change', this._handleAppStateChange);
     // register hardware back button listener
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigate(Constants.SCREEN_HOME.KEY)
+      this.props.navigation.navigate(Constants.SCREEN_HOME.KEY)
       return true;
     });
 
@@ -1590,7 +1590,7 @@ export default class ChooseHabitCharing extends React.Component {
               <TouchableOpacity
                 style={[styles.itemButton2]}
                 onPress={() =>
-                  this.props.navigate(Constants.SCREEN_CREATE_HABIT.KEY, {
+                  this.props.navigation.navigate(Constants.SCREEN_CREATE_HABIT.KEY, {
                     IdUser: this.state.ID_User,
                   })
                 }>
