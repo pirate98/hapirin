@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "codegenConfig": {
-    "name": "hapirin",
+    "name": "hapirinSpecs",
     "type": "modules",
     "jsSrcsDir": "specs",
     "modules": [
