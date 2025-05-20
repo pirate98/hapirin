@@ -20,7 +20,7 @@ function App(): React.JSX.Element {
   useEffect(() => {
     const initSound = async () => {
       audio = await SoundService.loadSoundBg('bgmnew.mp3')
-
+            
       setTimeout(() => {
         audio.play()
       }, 100);
@@ -28,11 +28,13 @@ function App(): React.JSX.Element {
 
     initSound()
 
-    AppState.addEventListener('change', handleAppStateChange)
+    const appStateSubscription = AppState.addEventListener('change', handleAppStateChange)
     DeviceEventEmitter.addListener(
       Constants.EVENT_CHANGE_SOUND,
       callbackChangeVolume
     )
+
+    return  () => appStateSubscription.remove()
   }, [])
 
   const handleAppStateChange = (currentAppState: string) => {
