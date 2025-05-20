@@ -44,13 +44,13 @@ import {moderateScale, verticalScale} from 'react-native-size-matters';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import TextFont from '../../commons/components/TextFont';
 import {getUserInfo} from '../../databases/StorageServices';
-import NotificationHandle from '../../../Notification';
+import NotificationHandle from '../../../specs/NotificationHandle'
 import DateTimeUtil from '../../commons/DateTimeUtil';
 import scales from '../../styles/scales';
 import FastImage from '@d11/react-native-fast-image';
 import ScrollPicker from '../../utils/ScrollPicker';
 import platforms from '../../utils/platforms';
-const {TaskManager} = NativeModules;
+import TaskManager from '../../../specs/TaskManager';
 
 const i18n = new I18n()
 

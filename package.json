@@ -9,6 +9,16 @@
     "start": "react-native start",
     "test": "jest"
   },
+  "codegenConfig": {
+    "name": "hapirin",
+    "type": "modules",
+    "jsSrcsDir": "specs",
+    "modules": [
+      "TaskManager",
+      "NotificationHandle",
+      "NCMBInitialization"
+    ]
+  },
   "dependencies": {
     "@d11/react-native-fast-image": "^8.9.2",
     "@react-native-async-storage/async-storage": "^2.1.2",

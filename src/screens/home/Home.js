@@ -46,12 +46,12 @@ import {scale, moderateScale} from 'react-native-size-matters';
 import {getUserInfo} from '../../databases/StorageServices';
 import SoundService from '../../soundService/SoundService';
 import moment from 'moment';
-import NCMBInitialization from '../../../NCMBInitialization';
+import NCMBInitialization from '../../../specs/NCMBInitialization';
 import scales from '../../styles/scales';
 import TextFont from '../../commons/components/TextFont';
 import FastImage from '@d11/react-native-fast-image';
-const {TaskManager} = NativeModules;
-import NotificationHandle from '../../../Notification';
+import TaskManager from '../../../specs/TaskManager';
+import NotificationHandle from '../../../specs/NotificationHandle';
 
 const i18n = new I18n()
 

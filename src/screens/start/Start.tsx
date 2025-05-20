@@ -17,9 +17,7 @@ import NetworkStatus from '../../commons/NetworkStatus';
 import { getUserInfo, insertUser } from '../../databases/StorageServices';
 import SoundService from '../../soundService/SoundService';
 import { useNavigation } from '@react-navigation/native';
-
-
-const { ToastModule, TaskManager } = NativeModules;
+import TaskManager from '../../../specs/TaskManager';
 
 const Start: React.FC = () => {
   const navigation = useNavigation();
@@ -103,28 +101,31 @@ const Start: React.FC = () => {
           console.error('Error fetching user data:', error);
         }
       } else if (Platform.OS === 'ios') {
-        TaskManager.getAllTask({}, async (error: any, task: any) => {
-          if (!error && task.name) {
-            try {
-              const res = await fetch(BASE_URL + API_GET_DATA_USER_WITH_ID, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'ID=' + task.name,
-              });
-              const data = await res.json();
-              if (data.length) {
-                await insertUser(data[0]);
-                navigation.navigate(Constants.SCREEN_HOME.KEY as never)
-              } else {
-                console.log('Get data error!');
-              }
-            } catch (e) {
-              console.error('Error fetching user by task name:', e);
+        try {
+          const task = await TaskManager.getAllTask({});
+
+          if (task?.name) {
+            const res = await fetch(BASE_URL + API_GET_DATA_USER_WITH_ID, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: 'ID=' + task.name,
+            });
+
+            const data = await res.json();
+
+            if (data.length) {
+              await insertUser(data[0]);
+              navigation.navigate(Constants.SCREEN_HOME.KEY as never);
+            } else {
+              console.log('Get data error!');
             }
           } else {
             setShowButton(true);
           }
-        });
+        } catch (error) {
+          console.error('Error in TaskManager.getAllTask or fetch:', error);
+          setShowButton(true);
+        }
       } else {
         setShowButton(true);
       }

@@ -56,7 +56,6 @@ import {Color} from '../../colors/Colors';
 import SoundService from '../../soundService/SoundService';
 import scales from '../../styles/scales';
 import FastImage from '@d11/react-native-fast-image';
-const {TaskManager} = NativeModules;
 
 const i18n = new I18n()
 
