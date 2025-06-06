@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "916997922771",
+    "firebase_url": "https://hapiboo-308b5.firebaseio.com",
+    "project_id": "hapiboo-308b5",
+    "storage_bucket": "hapiboo-308b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916997922771:android:72647ef0423b02e3889926",
+        "android_client_info": {
+          "package_name": "com.hapirin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916997922771-1ej7vh6mmjg8rip18cbpjvvor2c034b1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXSlxxoX2XWmzXHpJ5LNxzOc8Wm9mgb0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916997922771-1ej7vh6mmjg8rip18cbpjvvor2c034b1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
