@@ -38,10 +38,10 @@ function App(): React.JSX.Element {
   }, [])
 
   const handleAppStateChange = (currentAppState: string) => {
-    if (currentAppState === 'background') {
+    if (currentAppState === 'background' && audio) {
       audio.pause()
     }
-    if (currentAppState === 'active') {
+    if (currentAppState === 'active' && audio) {
       audio.play()
     }
   }
