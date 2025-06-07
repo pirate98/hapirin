@@ -55,7 +55,6 @@ const Calendar = () => {
   const [previousMonth, setPreviousMonth] = useState(new Date().getMonth().toString());
   const [nextMonth, setNextMonth] = useState(new Date().getMonth().toString());
   const [time, setTime] = useState('');
-  const [selectedStartDate, setSelectedStartDate] = useState<string | null>(null);
   const [dayCharing, setDayCharing] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dateInstall, setDateInstall] = useState('');
