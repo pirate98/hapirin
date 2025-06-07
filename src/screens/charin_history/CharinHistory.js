@@ -18,6 +18,7 @@ import Constants, {
   API_LIST_CHARIN_HISTORY,
   BASE_URL,
 } from '../../constants/Constants';
+import { moderateScale } from 'react-native-size-matters';
 import Toolbar from '../toolbar/Toolbar';
 import {Color} from '../../colors/Colors';
 import FastImage from '@d11/react-native-fast-image';
@@ -227,5 +228,111 @@ const CharinHistory = ({navigation, route}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  content: {
+    flex: 8,
+    flexDirection: 'column',
+    alignContent: 'center',
+    alignItems: 'center',
+
+    backgroundColor: Color.backgroundSetting,
+  },
+  note: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    // width: '100%',
+    height: '8%',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  textbutton: {
+    width: '70%',
+    color: 'black',
+    fontSize: moderateScale(15),
+    fontFamily: 'HuiFont',
+    paddingStart: moderateScale(10),
+    textAlign: 'center',
+  },
+  textdatetime: {
+    width: '50%',
+    color: 'black',
+    fontSize: moderateScale(15),
+    fontFamily: 'HuiFont',
+    flex: 7,
+    textAlign: 'center',
+  },
+  touchableopacitystyle: {
+    flex: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imagebuttonstyle: {
+    width: moderateScale(20),
+    height: moderateScale(20),
+    resizeMode: 'contain',
+  },
+  stylecontentlist: {
+    width: '100%',
+    height: '90%',
+  },
+  parentblanklist: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  styleImageBlank: {
+    width: '35%',
+    height: '25%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    resizeMode: 'stretch',
+  },
+  viewItem: {
+    width: '100%',
+    flexDirection: 'row',
+    padding: moderateScale(10),
+  },
+  itemImage: {
+    width: moderateScale(40),
+    height: moderateScale(40),
+    alignSelf: 'center',
+  },
+  contentItem: {
+    width: '85%',
+    color: 'black',
+    fontSize: moderateScale(15),
+    fontFamily: 'HuiFont',
+    alignSelf: 'center',
+    paddingLeft: moderateScale(10),
+    left: moderateScale(10),
+  },
+  styletextdetail: {
+    width: '30%',
+    color: 'black',
+    fontSize: moderateScale(20),
+    fontFamily: 'HuiFont',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    textAlign: 'right',
+  },
+  renderActivityIndicator: {
+    backgroundColor: Color.background_transparent,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  activityIndicatorStyle: {
+    alignSelf: 'center',
+    position: 'absolute',
+    top: '50%',
+    color: Color.cl_loading,
+  },
+});
 
 export default CharinHistory;
