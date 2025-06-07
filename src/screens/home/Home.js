@@ -12,7 +12,6 @@ import {
   StyleSheet,
   View,
   Text,
-  AsyncStorage,
   TouchableOpacity,
   BackHandler,
   Dimensions,
@@ -23,6 +22,8 @@ import {
   ActivityIndicator,
   NativeModules,
 } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Constants, {
   BASE_URL,

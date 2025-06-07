@@ -18,11 +18,11 @@ import {
   Dimensions,
   StatusBar,
   ActivityIndicator,
-  AsyncStorage,
   Platform,
   AppState,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toolbar from '../toolbar/Toolbar';
 import Constants, {
   BASE_URL,
@@ -1392,7 +1392,6 @@ export default class ChooseHabitCharing extends React.Component {
     /*true*/
     if (this.state.showAllMode === 1) {
       /*false*/
-      console.log('object1111');
       return (
         <View style={styles.content}>
           {this.viewDropdown()}

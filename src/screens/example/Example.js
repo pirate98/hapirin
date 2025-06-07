@@ -13,7 +13,6 @@ import {
   Text,
   TextInput,
   Button,
-  AsyncStorage,
   FlatList,
   TouchableOpacity,
   BackHandler,

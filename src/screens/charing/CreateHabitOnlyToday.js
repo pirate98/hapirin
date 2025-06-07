@@ -19,7 +19,6 @@ import {
   Dimensions,
   Alert,
   StatusBar,
-  AsyncStorage,
   AppState,
   Platform,
   ActivityIndicator,
@@ -27,6 +26,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toolbar from '../toolbar/Toolbar';
 import Constants, {
   BASE_URL,
